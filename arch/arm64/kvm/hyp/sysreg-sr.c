@@ -199,4 +199,7 @@ void __hyp_text __kvm_enable_ssbs(void)
 	"msr	sctlr_el2, %0"
 	: "=&r" (tmp) : "L" (SCTLR_ELx_DSSBS));
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> eeedd35d7b3556cd68d9548d6ec4080e9d084bba

@@ -2,6 +2,10 @@
 /*
  * Copyright (C) 2018 ARM Ltd, All Rights Reserved.
  */
+<<<<<<< HEAD
+=======
+
+>>>>>>> eeedd35d7b3556cd68d9548d6ec4080e9d084bba
 #include <linux/compat.h>
 #include <linux/errno.h>
 #include <linux/prctl.h>
@@ -9,7 +13,24 @@
 #include <linux/sched/task_stack.h>
 #include <linux/thread_info.h>
 
+#include <asm/compat.h>
 #include <asm/cpufeature.h>
+static void ssbd_ssbs_enable(struct task_struct *task)
+{
+	u64 val = is_compat_thread(task_thread_info(task)) ?
+		  PSR_AA32_SSBS_BIT : PSR_SSBS_BIT;
+
+	task_pt_regs(task)->pstate |= val;
+}
+
+static void ssbd_ssbs_disable(struct task_struct *task)
+{
+	u64 val = is_compat_thread(task_thread_info(task)) ?
+		  PSR_AA32_SSBS_BIT : PSR_SSBS_BIT;
+
+	task_pt_regs(task)->pstate &= ~val;
+}
+
 static void ssbd_ssbs_enable(struct task_struct *task)
 {
 	u64 val = is_compat_thread(task_thread_info(task)) ?
